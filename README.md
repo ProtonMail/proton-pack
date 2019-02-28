@@ -28,3 +28,7 @@ Boilerplate to start Proton React project
     * state (everything related to Redux to manage the store)
         * session
 ```
+
+## webpack
+
+`webpack.config.js` file need to be added per project.
