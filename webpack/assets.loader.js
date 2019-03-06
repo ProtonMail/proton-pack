@@ -10,7 +10,7 @@ module.exports = () => [
         },
     },
     {
-        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        test: /\.(png|jpg|jpeg|gif)$/,
         use: [
             {
                 loader: 'file-loader',
@@ -19,6 +19,10 @@ module.exports = () => [
                 }
             }
         ]
+    },
+    {
+        test: /\.svg$/,
+        loader: 'svg-inline-loader'
     },
     {
         test: /\.(woff|woff2|eot|ttf|otf)$/,

@@ -1,6 +1,12 @@
 # boilerplate
 Boilerplate to start Proton React project
 
+## Dev
+
+1. `$ npm i`
+2. `$ npm start`
+3. :popcorn: App available on :8080
+
 ## Structure
 
 ```
@@ -14,7 +20,6 @@ Boilerplate to start Proton React project
         * tokens
         * settings
             * account
-            * wallets
             * security
             * notifications
             * advanced

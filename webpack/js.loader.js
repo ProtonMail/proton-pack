@@ -1,4 +1,4 @@
-const getRegex = require('./helpers/babel');
+const { excludeNodeModulesExcept, excludeFiles, createRegex } = require('./helpers/regex');
 const { BABEL_EXCLUDE_FILES, BABEL_INCLUDE_NODE_MODULES } = require('./constants');
 
 const BABEL_PLUGINS_PRODUCTION = [
@@ -52,7 +52,10 @@ module.exports = ({ isProduction, isTranspile = true }) => {
         },
         {
             test: /\.js$/,
-            exclude: getRegex(BABEL_INCLUDE_NODE_MODULES, BABEL_EXCLUDE_FILES),
+            exclude: createRegex(
+                excludeNodeModulesExcept(BABEL_INCLUDE_NODE_MODULES),
+                excludeFiles(BABEL_EXCLUDE_FILES)
+            ),
             use: !isTranspile ? ['source-map-loader'] : TRANSPILE_JS_LOADER
         }
     ];
