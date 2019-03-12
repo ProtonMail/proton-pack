@@ -9,7 +9,6 @@ const { getPort } = require('../webpack/helpers/source');
 
 const isDevServer = argv._.includes('dev-server');
 
-
 if (isDevServer) {
     const server = require('../cli/server');
     const run = server(CONFIG);

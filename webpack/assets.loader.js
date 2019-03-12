@@ -7,8 +7,8 @@ module.exports = () => [
         loader: 'url-loader',
         options: {
             limit: LIMIT,
-            name: 'assets/img/[name].[hash:8].[ext]',
-        },
+            name: 'assets/img/[name].[hash:8].[ext]'
+        }
     },
     {
         test: DESIGN_SYSTEM_SVG,
@@ -25,7 +25,7 @@ module.exports = () => [
             {
                 loader: 'file-loader',
                 options: {
-                    name: 'assets/img/[name].[ext]',
+                    name: 'assets/img/[name].[ext]'
                 }
             }
         ]
@@ -36,16 +36,13 @@ module.exports = () => [
             {
                 loader: 'file-loader',
                 options: {
-                    name: 'assets/fonts/[name].[ext]',
+                    name: 'assets/fonts/[name].[ext]'
                 }
             }
         ]
     },
     {
         test: /\.po$/,
-        use: [
-            { loader: 'json-loader' },
-            { loader: 'po-gettext-loader' }
-        ]
+        use: [{ loader: 'json-loader' }, { loader: 'po-gettext-loader' }]
     }
 ];

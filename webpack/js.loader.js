@@ -1,9 +1,7 @@
 const { excludeNodeModulesExcept, excludeFiles, createRegex } = require('./helpers/regex');
 const { BABEL_EXCLUDE_FILES, BABEL_INCLUDE_NODE_MODULES } = require('./constants');
 
-const BABEL_PLUGINS_PRODUCTION = [
-    ['babel-plugin-transform-react-remove-prop-types',{ removeImport: true }]
-];
+const BABEL_PLUGINS_PRODUCTION = [['babel-plugin-transform-react-remove-prop-types', { removeImport: true }]];
 
 module.exports = ({ isProduction, isTranspile = true }) => {
     const TRANSPILE_JS_LOADER = [
@@ -29,8 +27,8 @@ module.exports = ({ isProduction, isTranspile = true }) => {
                         {
                             // Adds component stack to warning messages
                             // Adds __self attribute to JSX which React will use for some warnings
-                            development: !isProduction,
-                        },
+                            development: !isProduction
+                        }
                     ]
                 ],
                 plugins: [
@@ -38,7 +36,7 @@ module.exports = ({ isProduction, isTranspile = true }) => {
                     '@babel/plugin-proposal-object-rest-spread',
                     ['@babel/plugin-proposal-class-properties', { loose: true }],
                     '@babel/plugin-transform-runtime',
-                    ...isProduction ? BABEL_PLUGINS_PRODUCTION : ['react-hot-loader/babel']
+                    ...(isProduction ? BABEL_PLUGINS_PRODUCTION : ['react-hot-loader/babel'])
                 ]
             }
         }

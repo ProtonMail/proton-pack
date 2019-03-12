@@ -1,4 +1,4 @@
-const {getSource} = require('./helpers/source');
+const { getSource } = require('./helpers/source');
 
 const bindNodeModulesPrefix = (name) => getSource(`node_modules/${name}`);
 

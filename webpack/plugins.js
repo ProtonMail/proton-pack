@@ -12,7 +12,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const SriPlugin = require('webpack-subresource-integrity');
 
-const {getSource} = require('./helpers/source');
+const { getSource } = require('./helpers/source');
 const transformOpenpgpFiles = require('./helpers/openpgp');
 const { OPENPGP_FILES, OPENPGP_WORKERS, CHECK_COMPAT_APP } = require('./constants');
 
@@ -63,11 +63,7 @@ const PRODUCTION_PLUGINS = [
 ];
 
 module.exports = ({ isProduction }) => {
-    const { main, worker, compat, definition } = transformOpenpgpFiles(
-        OPENPGP_FILES,
-        OPENPGP_WORKERS[0],
-        isProduction
-    );
+    const { main, worker, compat, definition } = transformOpenpgpFiles(OPENPGP_FILES, OPENPGP_WORKERS[0], isProduction);
 
     return [
         new webpack.HotModuleReplacementPlugin(),
@@ -108,7 +104,6 @@ module.exports = ({ isProduction }) => {
             filename: isProduction ? '[name].[hash:8].js.map' : '[name].js.map'
         }),
 
-        ...isProduction ? PRODUCTION_PLUGINS : []
+        ...(isProduction ? PRODUCTION_PLUGINS : [])
     ];
 };
-
