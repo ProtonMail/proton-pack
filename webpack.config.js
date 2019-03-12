@@ -1,3 +1,4 @@
+const { getSource, getPort } = require("./webpack/helpers/source");
 const jsLoader = require("./webpack/js.loader");
 const cssLoader = require("./webpack/css.loader");
 const assetsLoader = require("./webpack/assets.loader");
@@ -9,12 +10,13 @@ const { excludeNodeModulesExcept, excludeFiles, createRegex } = require('./webpa
 const { BABEL_EXCLUDE_FILES, BABEL_INCLUDE_NODE_MODULES } = require('./webpack/constants');
 
 const conf = {
-  isProduction: false
+  isProduction: process.env.NODE_ENV === 'production'
 };
 
 const { isProduction } = conf;
 
 const config = {
+    stats: 'minimal',
   mode: !isProduction ? "development" : "production",
   bail: isProduction,
   devtool: false,
@@ -30,19 +32,24 @@ const config = {
   },
   devServer: {
     hot: true,
+    inline: true,
     compress: true,
     host: "0.0.0.0",
-    port: process.env.NODE_ENV_PORT,
     public: "localhost",
     historyApiFallback: true,
     disableHostCheck: true,
-    contentBase: outputPath
+    contentBase: outputPath,
+    stats: 'minimal'
   },
   resolve: {
     symlinks: false
   },
   entry: {
-    index: ["./src/app/index.js"]
+    index: [getSource("./src/app/index.js")],
+    app: [
+        `webpack-dev-server/client?http://localhost:${getPort()}/`,
+        "webpack/hot/dev-server"
+    ]
   },
   output: {
     path: outputPath,
@@ -58,5 +65,8 @@ const config = {
   plugins: plugins(conf),
   optimization: optimization(conf)
 };
+
+// config.entry.app.unshift("webpack-dev-server/client?http://localhost:8080/", "webpack/hot/dev-server");
+
 
 module.exports = config;

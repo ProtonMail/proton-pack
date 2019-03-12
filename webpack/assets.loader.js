@@ -1,4 +1,5 @@
 const LIMIT = 10000;
+const DESIGN_SYSTEM_SVG = /sprite-icons.svg$/;
 
 module.exports = () => [
     {
@@ -10,7 +11,16 @@ module.exports = () => [
         },
     },
     {
-        test: /\.(png|jpg|jpeg|gif)$/,
+        test: DESIGN_SYSTEM_SVG,
+        use: [
+            {
+                loader: 'svg-inline-loader'
+            }
+        ]
+    },
+    {
+        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        exclude: DESIGN_SYSTEM_SVG,
         use: [
             {
                 loader: 'file-loader',

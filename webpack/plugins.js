@@ -12,6 +12,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const SriPlugin = require('webpack-subresource-integrity');
 
+const {getSource} = require('./helpers/source');
 const transformOpenpgpFiles = require('./helpers/openpgp');
 const { OPENPGP_FILES, OPENPGP_WORKERS, CHECK_COMPAT_APP } = require('./constants');
 
@@ -69,6 +70,7 @@ module.exports = ({ isProduction }) => {
     );
 
     return [
+        new webpack.HotModuleReplacementPlugin(),
         isProduction ? new webpack.HashedModuleIdsPlugin() : new webpack.NamedModulesPlugin(),
 
         new WriteWebpackPlugin(
@@ -84,7 +86,7 @@ module.exports = ({ isProduction }) => {
         }),
 
         new HtmlWebpackPlugin({
-            template: 'src/app.ejs',
+            template: getSource('src/app.ejs'),
             inject: 'body',
             minify: isProduction ? HTML_MINIFY : false
         }),

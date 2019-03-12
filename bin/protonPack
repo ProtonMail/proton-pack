@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const path = require('path');
+const argv = require('minimist')(process.argv.slice(2));
+
+const CONFIG = require('../cli/config');
+const { getPort } = require('../webpack/helpers/source');
+
+const isDevServer = argv._.includes('dev-server');
+
+// console.log(process.env);
+// console.log(__dirname);
+console.log(process.env.NODE_ENV);
+
+
+if (isDevServer) {
+    const server = require('../cli/server');
+    const run = server(CONFIG);
+    const port = getPort();
+    run.listen(port, () => {
+        console.log('[protonPack@server] listen on port:', port);
+    });
+}
