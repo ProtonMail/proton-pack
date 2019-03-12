@@ -3,10 +3,11 @@
     "author": "Proton Technologies AG",
     "description": "Web frontend for proton service",
     "version": "0.1.0",
-    "private": true,
     "bin": {
         "proton-pack": "./bin/protonPack"
     },
+    "module": "src/app/index.js",
+    "main": "src/app/index.js",
     "engines": {
         "node": ">= 10.15.0"
     },

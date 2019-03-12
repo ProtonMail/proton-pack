@@ -5,8 +5,6 @@ import { hasModulesSupport } from 'proton-shared/lib/helpers/browser';
 import { initMain, initWorker } from 'proton-shared/lib/helpers/setupPmcrypto';
 import { check, redirect } from 'proton-shared/lib/helpers/compat';
 
-import './app.scss';
-
 // eslint-disable-next-line no-undef
 const { main, compat, worker } = PM_OPENPGP;
 
@@ -18,13 +16,18 @@ const dl = ({ filepath, integrity }) => {
     return fetch(filepath, options).then((response) => response.text());
 };
 
-(async () => {
+/**
+ * Load the app with OpenPGP
+ * @param  {Function} cb Callback to load the app -> () => import('srcApp')
+ * @return {Promise}
+ */
+async function run(cb) {
     if (!check()) {
         return redirect();
     }
 
     // pre-fetch everything
-    const initPromise = import('./init');
+    const initPromise = cb();
     const openpgpPromise = dl(hasModulesSupport() ? main : compat);
     const workerPromise = dl(worker);
 
@@ -37,4 +40,6 @@ const dl = ({ filepath, integrity }) => {
 
     // lazily create the workers
     await initWorker(openpgpContents, await workerPromise);
-})();
+}
+
+export default run;

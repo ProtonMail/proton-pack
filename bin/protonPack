@@ -9,16 +9,11 @@ const { getPort } = require('../webpack/helpers/source');
 
 const isDevServer = argv._.includes('dev-server');
 
-// console.log(process.env);
-// console.log(__dirname);
-console.log(process.env.NODE_ENV);
-
 
 if (isDevServer) {
     const server = require('../cli/server');
     const run = server(CONFIG);
     const port = getPort();
-    run.listen(port, () => {
-        console.log('[protonPack@server] listen on port:', port);
-    });
+    console.log('[protonPack@server] listen on port:', port);
+    run.listen(port);
 }
