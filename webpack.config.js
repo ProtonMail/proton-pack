@@ -45,10 +45,10 @@ const config = {
     symlinks: false
   },
   entry: {
-    index: [getSource("./src/app/index.js")],
-    app: [
+    index: [
         `webpack-dev-server/client?http://localhost:${getPort()}/`,
-        "webpack/hot/dev-server"
+        "webpack/hot/dev-server",
+        getSource("./src/app/index.js")
     ]
   },
   output: {
@@ -65,8 +65,6 @@ const config = {
   plugins: plugins(conf),
   optimization: optimization(conf)
 };
-
-// config.entry.app.unshift("webpack-dev-server/client?http://localhost:8080/", "webpack/hot/dev-server");
 
 
 module.exports = config;
