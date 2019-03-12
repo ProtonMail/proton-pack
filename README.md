@@ -30,3 +30,15 @@ module.exports = (webpackConfig) => {
     return webpackConfig;
 }
 ```
+
+## How to setup my app ?
+
+```js
+import boilerplate from 'proton-pack';
+import './app.scss';
+
+boilerplate(() => {
+    return import('./init');
+});
+```
+And you're done. With this you will auto load OpenPGP, your app and the worker. PmCrypto is ready.

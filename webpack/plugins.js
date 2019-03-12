@@ -84,7 +84,7 @@ module.exports = ({ isProduction }) => {
         new HtmlWebpackPlugin({
             template: getSource('src/app.ejs'),
             inject: 'body',
-            minify: isProduction ? HTML_MINIFY : false
+            minify: isProduction && HTML_MINIFY
         }),
 
         new SriPlugin({

@@ -5,8 +5,10 @@ const path = require('path');
 const argv = require('minimist')(process.argv.slice(2));
 
 const CONFIG = require('../cli/config');
+const initBasicProtonApp = require('../cli/initBasicProtonApp');
 const { getPort } = require('../webpack/helpers/source');
 
+const isInit = argv.init;
 const isDevServer = argv._.includes('dev-server');
 
 if (isDevServer) {
@@ -16,3 +18,5 @@ if (isDevServer) {
     console.log('[protonPack@server] listen on port:', port);
     run.listen(port);
 }
+
+isInit && initBasicProtonApp();
