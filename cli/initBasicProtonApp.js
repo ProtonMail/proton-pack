@@ -14,7 +14,8 @@ const PATH_APP_PKG = path.join(process.cwd(), 'package.json');
  */
 async function main() {
     await bash(`cp -r ${TEMPLATE}/src src`);
-    await bash(`cp -r ${TEMPLATE}/.{editorconfig,eslintrc.json,prettierrc,gitignore} .`);
+    await bash(`cp -r ${TEMPLATE}/.{editorconfig,eslintrc.json,prettierrc} .`);
+    await bash(`cp -r ${TEMPLATE}/_gitignore .gitignore`);
 
     const pkgTpl = require('../template/package.json');
     const pkgApp = require(PATH_APP_PKG);

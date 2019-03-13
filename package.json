@@ -109,8 +109,7 @@
     "lint": "eslint src --ext .js --quiet --cache",
     "pretty": "prettier --write  $(find src/app -type f -name '*.js')",
     "preversion": "git update-index --no-assume-unchanged package-lock.json",
-    "postversion": "git update-index --assume-unchanged package-lock.json && git push --tags",
-    "postinstall": "git update-index --assume-unchanged package-lock.json"
+    "postversion": "git update-index --assume-unchanged package-lock.json && git push --tags"
   },
   "license": "MIT",
   "lint-staged": {
