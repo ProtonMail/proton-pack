@@ -1,105 +1,50 @@
+const path = require('path');
 const fs = require('fs').promises;
-const util = require('util');
 const execa = require('execa');
+const chalk = require('chalk');
 const dedent = require('dedent');
 
-const writeFile = util.promisify(fs.writeFile);
 const bash = (cli) => execa.shell(cli, { shell: '/bin/bash' });
 
-const TEMPLATE_INDEX = dedent`
-    import boilerplate from 'proton-pack';
-    import './app.scss';
+const TEMPLATE = path.resolve(__dirname, '..', 'template');
+const PATH_APP_PKG = path.join(process.cwd(), 'package.json');
 
-    boilerplate(() => {
-        return import('./init');
-    });
-`;
+/**
+ * Copy the template boilerplate into the root ap
+ */
+async function main() {
+    await bash(`cp -r ${TEMPLATE}/src src`);
+    await bash(`cp -r ${TEMPLATE}/.{editorconfig,eslintrc.json,prettierrc,gitignore} .`);
 
-const TEMPLATE_INIT = dedent`
-    import ReactDOM from 'react-dom';
-    import React from 'react';
-    import { setConfig } from 'react-hot-loader';
+    const pkgTpl = require('../template/package.json');
+    const pkgApp = require(PATH_APP_PKG);
 
-    import createApp from './App';
-
-    setConfig({
-        ignoreSFC: true, // RHL will be __completely__ disabled for SFC
-        pureRender: true // RHL will not change render method
-    });
-
-    export default () => {
-        const App = createApp();
-        ReactDOM.render(<App />, document.querySelector('.app-root'));
+    const pkg = {
+        ...pkgApp,
+        ...pkgTpl,
+        devDependencies: {
+            ...pkgApp.devDependencies,
+            ...pkgTpl.devDependencies
+        }
     };
 
-`;
+    await fs.writeFile(PATH_APP_PKG, JSON.stringify(pkg, null, 4));
 
-const TEMPLATE_APPHTML = dedent`
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, user-scalable=no">
-        <meta http-equiv="x-dns-prefetch-control" content="off">
-        <base href="/">
-        <title></title>
-        <meta name="description" content="Log in or create an account.">
-        <link rel="shortcut icon" href="/assets/favicons/favicon.ico">
-        <meta name="google" content="notranslate">
-    </head>
-    <body>
-        <div class="app-root"></div>
-        <div class="modal-root"></div>
-        <noscript class="pm_noscript">
-            ProtonMail requires Javascript. Enable Javascript and reload this page to continue.
-        </noscript>
-    </body>
-    </html>
-`;
+    console.log(dedent`
+        🎉 ${chalk.green('Your app is ready')}
 
-const TEMPLATE_APP = dedent`
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, user-scalable=no">
-        <meta http-equiv="x-dns-prefetch-control" content="off">
-        <base href="/">
-        <title></title>
-        <meta name="description" content="Log in or create an account.">
-        <link rel="shortcut icon" href="/assets/favicons/favicon.ico">
-        <meta name="google" content="notranslate">
-    </head>
-    <body>
-        <div class="app-root"></div>
-        <div class="modal-root"></div>
-        <noscript class="pm_noscript">
-            ProtonMail requires Javascript. Enable Javascript and reload this page to continue.
-        </noscript>
-    </body>
-    </html>
-`;
+        Here is what's available for this setup:
+            - EditorConfig
+            - Eslint
+            - Prettier
+            - Husky + lint-staged
+            - React
+            - npm scripts
+                - ${chalk.yellow('start')}: dev server
+                - Hook postversion for pushing git tag
 
-async function main() {
-    await bash('mkdir -p src2/app');
-
-    const files = [
-        {
-            file: 'src2/app/index.js',
-            template: TEMPLATE_INDEX
-        },
-        {
-            file: 'src2/app/init.js',
-            template: TEMPLATE_INIT
-        },
-        {
-            file: 'src2/app.ejs',
-            template: TEMPLATE_APPHTML
-        }
-    ].map(({ file, template }) => fs.writeFile(file, template));
-
-    await Promise.all(files);
-    console.log('DONE');
+        ➙ Now you can run ${chalk.yellow('npm start')}
+    `);
 }
 
 module.exports = main;

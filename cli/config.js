@@ -1,8 +1,6 @@
 const path = require('path');
 
-const CONFIG = require('../webpack.config');
-
-const loadUserConfig = () => {
+const loadUserConfig = (cfg) => {
     try {
         const fromUser = require(path.join(process.cwd(), 'proton.config.js'));
         if (typeof fromUser !== 'function') {
@@ -15,10 +13,22 @@ const loadUserConfig = () => {
             console.error(msg);
             process.exit(1);
         }
-        return fromUser(CONFIG);
+        return fromUser(cfg);
     } catch (e) {
-        return CONFIG;
+        return cfg;
     }
 };
 
-module.exports = loadUserConfig(CONFIG);
+/**
+ * format the config based on some options
+ * - port: <Number> for the dev server
+ * @param  {Object} options
+ * @return {Object}         Webpack's config
+ */
+function main(options) {
+    const defaultConfig = require('../webpack.config');
+    const cfg = defaultConfig(options);
+    return loadUserConfig(cfg);
+}
+
+module.exports = main;

@@ -1,4 +1,4 @@
-const { getSource, getPort } = require('./webpack/helpers/source');
+const { getSource } = require('./webpack/helpers/source');
 const jsLoader = require('./webpack/js.loader');
 const cssLoader = require('./webpack/css.loader');
 const assetsLoader = require('./webpack/assets.loader');
@@ -15,50 +15,52 @@ const conf = {
 
 const { isProduction } = conf;
 
-const config = {
-    stats: 'minimal',
-    mode: !isProduction ? 'development' : 'production',
-    bail: isProduction,
-    devtool: false,
-    watchOptions: {
-        ignored: [
-            createRegex(excludeNodeModulesExcept(BABEL_INCLUDE_NODE_MODULES), excludeFiles(BABEL_EXCLUDE_FILES)),
-            'i18n/*.json',
-            /\*\.(gif|jpeg|jpg|ico|png)/
-        ]
-    },
-    devServer: {
-        hot: true,
-        inline: true,
-        compress: true,
-        host: '0.0.0.0',
-        public: 'localhost',
-        historyApiFallback: true,
-        disableHostCheck: true,
-        contentBase: outputPath,
-        stats: 'minimal'
-    },
-    resolve: {
-        symlinks: false
-    },
-    entry: {
-        index: [
-            `webpack-dev-server/client?http://localhost:${getPort()}/`,
-            'webpack/hot/dev-server',
-            getSource('./src/app/index.js')
-        ]
-    },
-    output: {
-        path: outputPath,
-        filename: isProduction ? '[name].[chunkhash:8].js' : '[name].js',
-        chunkFilename: isProduction ? '[name].[chunkhash:8].chunk.js' : '[name].chunk.js',
-        crossOriginLoading: 'anonymous'
-    },
-    module: {
-        rules: [...jsLoader(conf), ...cssLoader(conf), ...assetsLoader(conf)]
-    },
-    plugins: plugins(conf),
-    optimization: optimization(conf)
-};
+function main({ port }) {
+    return {
+        stats: 'minimal',
+        mode: !isProduction ? 'development' : 'production',
+        bail: isProduction,
+        devtool: false,
+        watchOptions: {
+            ignored: [
+                createRegex(excludeNodeModulesExcept(BABEL_INCLUDE_NODE_MODULES), excludeFiles(BABEL_EXCLUDE_FILES)),
+                'i18n/*.json',
+                /\*\.(gif|jpeg|jpg|ico|png)/
+            ]
+        },
+        devServer: {
+            hot: true,
+            inline: true,
+            compress: true,
+            host: '0.0.0.0',
+            public: 'localhost',
+            historyApiFallback: true,
+            disableHostCheck: true,
+            contentBase: outputPath,
+            stats: 'minimal'
+        },
+        resolve: {
+            symlinks: false
+        },
+        entry: {
+            index: [
+                `webpack-dev-server/client?http://localhost:${port}/`,
+                'webpack/hot/dev-server',
+                getSource('./src/app/index.js')
+            ]
+        },
+        output: {
+            path: outputPath,
+            filename: isProduction ? '[name].[chunkhash:8].js' : '[name].js',
+            chunkFilename: isProduction ? '[name].[chunkhash:8].chunk.js' : '[name].chunk.js',
+            crossOriginLoading: 'anonymous'
+        },
+        module: {
+            rules: [...jsLoader(conf), ...cssLoader(conf), ...assetsLoader(conf)]
+        },
+        plugins: plugins(conf),
+        optimization: optimization(conf)
+    };
+}
 
-module.exports = config;
+module.exports = main;

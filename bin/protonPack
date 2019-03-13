@@ -2,21 +2,34 @@
 
 const fs = require('fs');
 const path = require('path');
+const chalk = require('chalk');
+const dedent = require('dedent');
 const argv = require('minimist')(process.argv.slice(2));
+const localIp = require('my-local-ip');
 
-const CONFIG = require('../cli/config');
+const configBuilder = require('../cli/config');
 const initBasicProtonApp = require('../cli/initBasicProtonApp');
-const { getPort } = require('../webpack/helpers/source');
+const { getPort, findPort } = require('../webpack/helpers/source');
 
-const isInit = argv.init;
+const isInit = argv._.includes('init');
 const isDevServer = argv._.includes('dev-server');
 
-if (isDevServer) {
-    const server = require('../cli/server');
-    const run = server(CONFIG);
-    const port = getPort();
-    console.log('[protonPack@server] listen on port:', port);
-    run.listen(port);
+async function main() {
+    if (isDevServer) {
+        const server = require('../cli/server');
+        const port = await findPort();
+
+        const log = (ip = 'localhost') => chalk.yellow(`http://${ip}:${port}`);
+        console.log(dedent`
+            ➙ Dev server: ${log()}
+            ➙ Dev server: ${log(localIp())}
+        `);
+        const CONFIG = configBuilder({ port });
+        const run = server(CONFIG);
+        run.listen(port);
+    }
+
+    isInit && initBasicProtonApp();
 }
 
-isInit && initBasicProtonApp();
+main();
