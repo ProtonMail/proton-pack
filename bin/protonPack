@@ -16,7 +16,8 @@ const isDevServer = argv._.includes('dev-server');
 
 const {
     config: appConfig,
-    path: appConfigPath
+    path: appConfigPath,
+    apiUrl
 } = configAppBuilder(argv);
 
 
@@ -36,6 +37,8 @@ async function main() {
         console.log(dedent`
             ➙ Dev server: ${log()}
             ➙ Dev server: ${log(localIp())}
+            ➙ API: ${chalk.yellow(apiUrl)}
+
         `);
         const CONFIG = configBuilder({ port });
 
