@@ -23,6 +23,18 @@ Create your application with openpgp and our webpack config.
 2. `$ npm start`
 3. :popcorn: App available on :8080
 
+### Dev env
+
+As for the WebClient you need to have `env.json`
+A new key exists inside this file now, to add more config
+```json
+{
+    "appConfig": {
+        "clientId": "Web"
+    }
+
+}
+```
 ## Commands
 
 - `$ proton-pack dev-server`

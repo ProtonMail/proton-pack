@@ -1,8 +1,17 @@
 const path = require('path');
 
+/**
+ * Load the config for webpack
+ * We will try to load the proton.config.js in the user's app dir
+ * if there is one.
+ * We will use it to extend our config
+ * @param  {Object} cfg Our own configuration
+ * @return {Object}
+ */
 const loadUserConfig = (cfg) => {
     try {
         const fromUser = require(path.join(process.cwd(), 'proton.config.js'));
+
         if (typeof fromUser !== 'function') {
             const msg = [
                 '[ProtonPack] Error',
@@ -13,6 +22,7 @@ const loadUserConfig = (cfg) => {
             console.error(msg);
             process.exit(1);
         }
+
         return fromUser(cfg);
     } catch (e) {
         return cfg;
