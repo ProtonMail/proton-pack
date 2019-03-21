@@ -1,4 +1,5 @@
 const path = require('path');
+const { success } = require('./log');
 
 /**
  * Load the config for webpack
@@ -23,7 +24,9 @@ const loadUserConfig = (cfg) => {
             process.exit(1);
         }
 
-        return fromUser(cfg);
+        const config = fromUser(cfg);
+        success('Found proton.config.js, extend the config');
+        return config;
     } catch (e) {
         return cfg;
     }
