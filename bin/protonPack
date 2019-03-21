@@ -38,7 +38,7 @@ async function main() {
             ➙ Dev server: ${log()}
             ➙ Dev server: ${log(localIp())}
             ➙ API: ${chalk.yellow(apiUrl)}
-
+            \n
         `);
         const CONFIG = configBuilder({ port });
 

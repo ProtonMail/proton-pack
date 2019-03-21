@@ -1,3 +1,5 @@
+const path = require('path');
+
 const { getSource } = require('./webpack/helpers/source');
 const jsLoader = require('./webpack/js.loader');
 const cssLoader = require('./webpack/css.loader');
@@ -40,7 +42,15 @@ function main({ port }) {
             stats: 'minimal'
         },
         resolve: {
-            symlinks: false
+            symlinks: false,
+            alias: {
+                // Ensure the same pmcrypto is used for pm-srp and angular if you symlink pm-srp to dev.
+                pmcrypto: path.resolve('./node_modules/pmcrypto'),
+                // Ensure the same react is used for npm links
+                react: path.resolve('./node_modules/react'),
+                'react-dom': path.resolve('./node_modules/react-dom'),
+                'design-system': path.resolve('./node_modules/design-system')
+            }
         },
         entry: {
             index: [
