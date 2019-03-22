@@ -41,6 +41,10 @@ A new key exists inside this file now, to add more config
 
 > _Run a dev server available on `8080` by default. You can customize the port via_ `NODE_ENV_PORT`
 
+You can also pass custom flags:
+- `--port=<Number>`: to use a custom port
+- `--publicPath=/settings/`: to serve the app on /settings/
+
 ## How to configure
 
 Create a file `proton.config.js` at the root of your app.
