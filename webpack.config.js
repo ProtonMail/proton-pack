@@ -11,13 +11,14 @@ const { outputPath } = require('./webpack/paths');
 const { excludeNodeModulesExcept, excludeFiles, createRegex } = require('./webpack/helpers/regex');
 const { BABEL_EXCLUDE_FILES, BABEL_INCLUDE_NODE_MODULES } = require('./webpack/constants');
 
-const conf = {
-    isProduction: process.env.NODE_ENV === 'production'
-};
+function main({ port, publicPath }) {
+    const conf = {
+        isProduction: process.env.NODE_ENV === 'production',
+        publicPath: publicPath || '/'
+    };
 
-const { isProduction } = conf;
+    const { isProduction } = conf;
 
-function main({ port }) {
     return {
         stats: 'minimal',
         mode: !isProduction ? 'development' : 'production',
@@ -36,9 +37,12 @@ function main({ port }) {
             compress: true,
             host: '0.0.0.0',
             public: 'localhost',
-            historyApiFallback: true,
+            historyApiFallback: {
+                index: publicPath
+            },
             disableHostCheck: true,
             contentBase: outputPath,
+            publicPath,
             stats: 'minimal'
         },
         resolve: {
@@ -62,6 +66,7 @@ function main({ port }) {
         output: {
             path: outputPath,
             filename: isProduction ? '[name].[chunkhash:8].js' : '[name].js',
+            publicPath,
             chunkFilename: isProduction ? '[name].[chunkhash:8].chunk.js' : '[name].chunk.js',
             crossOriginLoading: 'anonymous'
         },
