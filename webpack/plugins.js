@@ -62,8 +62,13 @@ const PRODUCTION_PLUGINS = [
     })
 ];
 
-module.exports = ({ isProduction }) => {
-    const { main, worker, compat, definition } = transformOpenpgpFiles(OPENPGP_FILES, OPENPGP_WORKERS[0], isProduction);
+module.exports = ({ isProduction, publicPath }) => {
+    const { main, worker, compat, definition } = transformOpenpgpFiles(
+        OPENPGP_FILES,
+        OPENPGP_WORKERS[0],
+        publicPath,
+        isProduction
+    );
 
     return [
         new webpack.HotModuleReplacementPlugin(),

@@ -20,6 +20,10 @@ const {
     apiUrl
 } = configAppBuilder(argv);
 
+const {
+    publicPath = '/',
+    port: specifiedPort
+} = argv;
 
 async function main() {
 
@@ -31,16 +35,16 @@ async function main() {
     // Run the dev server, but first find an available port
     if (isDevServer) {
         const server = require('../cli/server');
-        const port = await findPort();
+        const port = specifiedPort || await findPort();
 
-        const log = (ip = 'localhost') => chalk.yellow(`http://${ip}:${port}`);
+        const log = (ip = 'localhost') => chalk.yellow(`http://${ip}:${port}${publicPath}`);
         console.log(dedent`
             ➙ Dev server: ${log()}
             ➙ Dev server: ${log(localIp())}
             ➙ API: ${chalk.yellow(apiUrl)}
             \n
         `);
-        const CONFIG = configBuilder({ port });
+        const CONFIG = configBuilder({ port, publicPath });
 
         const run = server(CONFIG);
         run.listen(port);
