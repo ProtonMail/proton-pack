@@ -9,7 +9,7 @@ const localIp = require('my-local-ip');
 
 const configBuilder = require('../cli/config');
 const configAppBuilder = require('../cli/configApp');
-const { getPort, findPort } = require('../webpack/helpers/source');
+const { getPort, getPublicPath, findPort } = require('../webpack/helpers/source');
 
 const isInit = argv._.includes('init');
 const isDevServer = argv._.includes('dev-server');
@@ -19,11 +19,6 @@ const {
     path: appConfigPath,
     apiUrl
 } = configAppBuilder(argv);
-
-const {
-    publicPath = '/',
-    port: specifiedPort
-} = argv;
 
 async function main() {
 
@@ -35,7 +30,8 @@ async function main() {
     // Run the dev server, but first find an available port
     if (isDevServer) {
         const server = require('../cli/server');
-        const port = specifiedPort || await findPort();
+        const port = await findPort(getPort(argv));
+        const publicPath = getPublicPath(argv);
 
         const log = (ip = 'localhost') => chalk.yellow(`http://${ip}:${port}${publicPath}`);
         console.log(dedent`
