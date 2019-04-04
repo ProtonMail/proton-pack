@@ -13,8 +13,7 @@ function main(config) {
 
     compiler.run(function(err, stats) {
         if (err) {
-            const errorString = (err.stack || err.toString()) + err.details || '';
-            error(errorString);
+            error(err);
         }
 
         success(
