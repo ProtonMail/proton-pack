@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const { success, error } = require('./log');
 
 function main(config) {
     const compiler = webpack(config);
@@ -12,14 +13,11 @@ function main(config) {
 
     compiler.run(function(err, stats) {
         if (err) {
-            console.error(err.stack || err);
-            if (err.details) {
-                console.error(err.details);
-            }
-            return;
+            const errorString = (err.stack || err.toString()) + err.details || '';
+            error(errorString);
         }
 
-        console.log(
+        success(
             stats.toString({
                 chunks: false,
                 colors: true

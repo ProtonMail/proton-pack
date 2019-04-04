@@ -7,7 +7,6 @@ const dedent = require('dedent');
 const argv = require('minimist')(process.argv.slice(2));
 const localIp = require('my-local-ip');
 
-const compile = require('../cli/compile');
 const configBuilder = require('../cli/config');
 const configAppBuilder = require('../cli/configApp');
 const { getPort, getPublicPath, findPort } = require('../webpack/helpers/source');
@@ -30,6 +29,7 @@ async function main() {
     }
 
     if (isCompile) {
+        const compile = require('../cli/compile');
         const publicPath = getPublicPath(argv);
         const CONFIG = configBuilder({ publicPath });
         compile(CONFIG);
