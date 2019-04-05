@@ -45,6 +45,10 @@ You can also pass custom flags:
 - `--port=<Number>`: to use a custom port
 - `--publicPath=/settings/`: to serve the app on /settings/
 
+- `$ proton-pack compile`
+
+> _Build your app_
+
 ## How to configure
 
 Create a file `proton.config.js` at the root of your app.
