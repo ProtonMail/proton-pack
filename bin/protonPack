@@ -79,6 +79,9 @@ async function main() {
                 - --api=<String>: Change the API, based on your env.json
                 - --publicPath=/settings/: to build the app based on /settings/
               Build the app
+
+          - ${chalk.blue('extract-i18n')}
+              Extract translations from a project (we use ttag)
         `);
     }
 }

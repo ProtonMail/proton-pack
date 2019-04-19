@@ -6,7 +6,7 @@ Create your application with openpgp and our webpack config.
 
 ```sh
 $ npm i -D github:ProtonMail/proton-pack.git#semver:^1.0.0
-```
+``` 
 
 ## Create a new app with openpgp etc.
 
@@ -34,6 +34,10 @@ A new key exists inside this file now, to add more config
 - type: auth basic app with login + private routes
 
 > _Create a basic app from our boilerplate with openpgp_
+
+- `$ proton-pack extract-i18n`
+
+> _Extract translations for the app_
 
 - `$ proton-pack compile`
 - `$ proton-pack dev-server`
