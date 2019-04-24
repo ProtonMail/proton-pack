@@ -11,10 +11,6 @@ const configBuilder = require('../cli/config');
 const configAppBuilder = require('../cli/configApp');
 const { getPort, getPublicPath, findPort } = require('../webpack/helpers/source');
 
-const isInit = argv._.includes('init');
-const isDevServer = argv._.includes('dev-server');
-const isCompile = argv._.includes('compile');
-
 const is = (command) => argv._.includes(command);
 
 const {
@@ -26,7 +22,7 @@ const {
 async function main() {
 
     // For any task BUT init we need to create a custom config for the app
-    if (!is('init')) {
+    if (!is('init') && !is('help')) {
         await fs.writeFile(appConfigPath, appConfig);
     }
 
@@ -61,6 +57,28 @@ async function main() {
     if (is('init')) {
         const initProtonApp = require('../cli/initProtonApp');
         initProtonApp(argv._[1]);
+    }
+
+    if (is('help')) {
+        console.log(dedent`
+        Usage: $ proton-pack <command>
+        Available commands:
+          - ${chalk.blue('init')} ${chalk.blue('<type>')}
+              Create a basic app with OpenPGP.
+                - type: default (default) basic app
+                - type: auth basic app with login + private routes
+
+          - ${chalk.blue('dev-server')}
+              Dev server, default port on ${chalk.bold('8080')}
+                - --api=<String>: Change the API, based on your env.json
+                - --port=<Number>: to use a custom port
+                - --publicPath=/settings/: to serve the app on /settings/
+
+          - ${chalk.blue('compile')}
+                - --api=<String>: Change the API, based on your env.json
+                - --publicPath=/settings/: to build the app based on /settings/
+              Build the app
+        `);
     }
 }
 
