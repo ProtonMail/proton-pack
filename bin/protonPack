@@ -15,6 +15,8 @@ const isInit = argv._.includes('init');
 const isDevServer = argv._.includes('dev-server');
 const isCompile = argv._.includes('compile');
 
+const is = (command) => argv._.includes(command);
+
 const {
     config: appConfig,
     path: appConfigPath,
@@ -24,11 +26,11 @@ const {
 async function main() {
 
     // For any task BUT init we need to create a custom config for the app
-    if (!isInit) {
+    if (!is('init')) {
         await fs.writeFile(appConfigPath, appConfig);
     }
 
-    if (isCompile) {
+    if (is('compile')) {
         const compile = require('../cli/compile');
         const publicPath = getPublicPath(argv);
         const CONFIG = configBuilder({ publicPath });
@@ -37,7 +39,7 @@ async function main() {
     }
 
     // Run the dev server, but first find an available port
-    if (isDevServer) {
+    if (is('dev-server')) {
         const server = require('../cli/server');
         const port = await findPort(getPort(argv));
         const publicPath = getPublicPath(argv);
@@ -56,9 +58,9 @@ async function main() {
     }
 
     // Init the application with the boilerplate
-    if (isInit) {
-        const initBasicProtonApp = require('../cli/initBasicProtonApp');
-        initBasicProtonApp();
+    if (is('init')) {
+        const initProtonApp = require('../cli/initProtonApp');
+        initProtonApp(argv._[1]);
     }
 }
 
