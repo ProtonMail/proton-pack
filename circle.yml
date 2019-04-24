@@ -1,0 +1,15 @@
+version: 2
+jobs:
+   build:
+     docker:
+       - image: circleci/node:10.3.0-stretch-browsers
+     steps:
+       - checkout
+       - restore_cache:
+           key: npm-deps-{{ checksum "package.json" }}
+       - run: npm ci
+       - save_cache:
+           key: npm-deps-{{ checksum "package.json" }}
+           paths:
+             - node_modules
+       - run: npm run lint
