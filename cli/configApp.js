@@ -2,7 +2,7 @@ const path = require('path');
 const dedent = require('dedent');
 const argv = require('minimist')(process.argv.slice(2));
 
-const { warn, error, success } = require('./log');
+const { warn } = require('./log');
 
 const isHelp = argv._.includes('help');
 

@@ -42,7 +42,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-react-app": "^3.0.6",
     "eslint-plugin-flowtype": "^2.50.3",
-    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.12.3",
     "eslint-plugin-react-hooks": "^1.0.2",
@@ -101,8 +101,8 @@
     "prettier": "^1.16.4"
   },
   "scripts": {
-    "lint": "eslint src --ext .js --quiet --cache",
-    "pretty": "prettier --write  $(find src/app -type f -name '*.js')",
+    "lint": "eslint $(find cli bin -type f) --quiet --cache",
+    "pretty": "prettier --write  cli bin",
     "preversion": "git update-index --no-assume-unchanged package-lock.json",
     "postversion": "git update-index --assume-unchanged package-lock.json && git push --tags"
   },
