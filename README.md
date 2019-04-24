@@ -2,26 +2,16 @@
 
 Create your application with openpgp and our webpack config.
 
-
 ## How to install ?
 
-1. `$ npm i -D proton-pack`
-2. `$ npx proton-pack init` _If you want to use our boilerplate_
-3. `npm i`
-4. `$ npm start` :popcorn: App available on :8080
+```sh
+$ npm i -D github:ProtonMail/proton-pack.git#semver:^1.0.0
+```
 
-### Before we put it on npm create a project
+## Create a new app with openpgp etc.
 
-1. `$ npm init --yes`
-2. Add`"proton-pack": "github:ProtonMail/boilerplate.git#feat/binary"` inside the package.json
-3. `npm i`
-4. `npx proton-pack init`
-
-## Dev
-
-1. `$ npm i`
-2. `$ npm start`
-3. :popcorn: App available on :8080
+1. `$ npx proton-pack init` _If you want to use our boilerplate_
+2. `$ npm start` :popcorn: App available on :8080
 
 ### Dev env
 
@@ -37,6 +27,15 @@ A new key exists inside this file now, to add more config
 ```
 ## Commands
 
+- `$ proton-pack help`
+
+- `$ proton-pack init <type>`
+- type: default (default) basic app
+- type: auth basic app with login + private routes
+
+> _Create a basic app from our boilerplate with openpgp_
+
+- `$ proton-pack compile`
 - `$ proton-pack dev-server`
 
 > _Run a dev server available on `8080` by default. You can customize the port via_ `NODE_ENV_PORT`
@@ -76,4 +75,4 @@ boilerplate(() => {
     return import('./init'); // There goes your app
 });
 ```
-And you're done. With this you will auto load OpenPGP, your app and the worker. PmCrypto is ready.
+And you're done. With this you will auto load OpenPGP, your app and the worker. pmCrypto is ready.
