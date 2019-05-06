@@ -3,7 +3,6 @@ const dedent = require('dedent');
 const argv = require('minimist')(process.argv.slice(2));
 
 const { warn } = require('./log');
-const { getFiles } = require('../config');
 
 const isHelp = argv._.includes('help');
 
@@ -20,7 +19,8 @@ const isHelp = argv._.includes('help');
 const CONFIG_ENV = (() => {
     const pkg = require(path.join(process.cwd(), 'package.json'));
     try {
-        const { I18N_EXTRACT_DIR } = getFiles();
+        const I18N_EXTRACT_DIR = 'po';
+        // @todo load value from the env as it's done for proton-i19n
         return {
             lang: require(path.join(process.cwd(), I18N_EXTRACT_DIR, 'lang.json')),
             env: require(path.join(process.cwd(), 'env.json')),
