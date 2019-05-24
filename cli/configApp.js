@@ -6,6 +6,15 @@ const { warn } = require('./log');
 
 const isHelp = argv._.includes('help');
 
+const readJSON = (file) => {
+    const fileName = `${file}.json`;
+    try {
+        return require(path.join(process.cwd(), fileName));
+    } catch (e) {
+        !isHelp && warn(`Missing file ${fileName}`);
+    }
+};
+
 /**
  * Extract the config of a project
  * - env: from env.json for sentry, and some custom config for the app
@@ -18,18 +27,13 @@ const isHelp = argv._.includes('help');
  */
 const CONFIG_ENV = (() => {
     const pkg = require(path.join(process.cwd(), 'package.json'));
-    try {
-        const I18N_EXTRACT_DIR = 'po';
-        // @todo load value from the env as it's done for proton-i19n
-        return {
-            lang: require(path.join(process.cwd(), I18N_EXTRACT_DIR, 'lang.json')),
-            env: require(path.join(process.cwd(), 'env.json')),
-            pkg
-        };
-    } catch (e) {
-        !isHelp && warn('⚠⚠⚠ No ./env.json found ⚠⚠⚠', '➙ Please check the wiki to create it');
-        return { pkg, env: {}, lang: [] };
-    }
+    const I18N_EXTRACT_DIR = 'po';
+    // @todo load value from the env as it's done for proton-i19n
+    return {
+        lang: readJSON(path.join(I18N_EXTRACT_DIR, 'lang')) || [],
+        env: readJSON('env') || {},
+        pkg
+    };
 })();
 
 const ENV_CONFIG = Object.keys(CONFIG_ENV.env).reduce(
