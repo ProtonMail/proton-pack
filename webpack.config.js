@@ -78,7 +78,9 @@ function main({ port, publicPath, flow }) {
                 'react-dom': path.resolve('./node_modules/react-dom'),
                 'design-system': path.resolve('./node_modules/design-system'),
                 'proton-shared': path.resolve('./node_modules/proton-shared'),
-                'react-components': path.resolve('./node_modules/react-components')
+                'react-components': path.resolve('./node_modules/react-components'),
+                // Else it will use the one from react-component, shared etc. if we use npm link
+                ttag: path.resolve('./node_modules/ttag')
             }
         },
         entry: {
