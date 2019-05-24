@@ -8,6 +8,11 @@ const isHelp = argv._.includes('help');
 
 const readJSON = (file) => {
     const fileName = `${file}.json`;
+
+    if (file === 'env' && !isHelp) {
+        warn('[DEPREACTION NOTICE] Please rename your file env.json to appConfig.json');
+    }
+
     try {
         return require(path.join(process.cwd(), fileName));
     } catch (e) {
@@ -31,7 +36,7 @@ const CONFIG_ENV = (() => {
     // @todo load value from the env as it's done for proton-i19n
     return {
         lang: readJSON(path.join(I18N_EXTRACT_DIR, 'lang')) || [],
-        env: readJSON('env') || {},
+        env: readJSON('appConfig') || readJSON('env') || {},
         pkg
     };
 })();
