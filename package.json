@@ -64,6 +64,7 @@
     "node-progress": "^0.1.0",
     "node-sass": "^4.11.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "pm-srp": "github:ProtonMail/pm-srp#semver:^1.0.0",
     "pmcrypto": "github:ProtonMail/pmcrypto.git#semver:^6.0.0",
     "po-gettext-loader": "^0.1.1",
     "postcss-loader": "^3.0.0",
