@@ -20,7 +20,10 @@ A new key exists inside this file now, to add more config
 ```json
 {
     "appConfig": {
-        "clientId": "Web"
+        "clientId": "Web", // [mandatory]
+        "urlI18n": "", // [mandatory if not protonmail] Url for i18n, ex: settings for protonmail-settings
+        "clientType": "", // CUstom client type
+        "version": "", // CUstom verison 
     }
 
 }
