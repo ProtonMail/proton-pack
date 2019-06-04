@@ -55,6 +55,11 @@ You can also pass custom flags:
 
 > _Build your app_
 
+
+- `$ proton-pack print-config`
+
+> _Print as JSON the current config_
+
 ## How to configure
 
 Create a file `proton.config.js` at the root of your app.
