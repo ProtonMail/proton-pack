@@ -77,14 +77,3 @@ module.exports = (webpackConfig) => {
 }
 ```
 
-## How to setup my app ? (manually)
-
-```js
-import boilerplate from 'proton-pack'; // Will auto wrap your app with openpgp etc.
-import './app.scss'; // Custom CSS for your project
-
-boilerplate(() => {
-    return import('./init'); // There goes your app
-});
-```
-And you're done. With this you will auto load OpenPGP, your app and the worker. pmCrypto is ready.
