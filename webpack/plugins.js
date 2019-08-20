@@ -112,8 +112,14 @@ module.exports = ({ isProduction, publicPath, appMode }) => {
             defaultAttribute: 'defer'
         }),
 
+        // new webpack.SourceMapDevToolPlugin({
+        //     test: /.js$/,
+        //     filename: isProduction ? '[name].[hash:8].js.map' : '[name].js.map'
+        // }),
+
         new webpack.SourceMapDevToolPlugin({
-            filename: isProduction ? '[name].[hash:8].js.map' : '[name].js.map'
+            test: /.js$/,
+            filename: '[file].map'
         }),
 
         ...(isProduction ? PRODUCTION_PLUGINS : [])
