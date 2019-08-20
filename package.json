@@ -87,6 +87,7 @@
     "ttag": "^1.7.17",
     "ttag-cli": "^1.7.17",
     "url-loader": "^2.0.1",
+    "webapp-webpack-plugin": "^2.7.1",
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.5",
     "webpack-dev-server": "^3.7.2",
@@ -98,8 +99,7 @@
   "devDependencies": {
     "husky": "^3.0.0",
     "lint-staged": "^9.1.0",
-    "prettier": "^1.18.2",
-    "webapp-webpack-plugin": "^2.7.1"
+    "prettier": "^1.18.2"
   },
   "scripts": {
     "lint": "eslint $(find cli bin -type f) --quiet --cache",
