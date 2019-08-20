@@ -74,7 +74,7 @@ function main({ api = 'dev' }) {
         apiUrl
     };
 
-    const { SENTRY_RELEASE, SENTRY_DSN } = prepareSentry(ENV_CONFIG, json, api);
+    const { SENTRY_RELEASE = '', SENTRY_DSN = '' } = prepareSentry(ENV_CONFIG, json, api);
 
     const config = dedent`
     export const CLIENT_ID = '${json.clientId}';

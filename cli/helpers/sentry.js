@@ -1,9 +1,9 @@
-const { sync } = require('./helpers/cli');
+const { sync } = require('./cli');
 
 const getBuildCommit = () => {
     try {
-        const origin = sync('git rev-parse HEAD');
-        return origin.toString().trim();
+        const { stdout = '' } = sync('git rev-parse HEAD');
+        return stdout.trim();
     } catch (e) {
         return '';
     }
