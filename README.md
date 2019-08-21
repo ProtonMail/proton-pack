@@ -6,7 +6,7 @@ Create your application with openpgp and our webpack config.
 
 ```sh
 $ npm i -D github:ProtonMail/proton-pack.git#semver:^1.0.0
-``` 
+```
 
 ## Create a new app with openpgp etc.
 
@@ -20,12 +20,12 @@ A new key exists inside this file now, to add more config
 ```json
 {
     "appConfig": {
-        "clientId": "Web", // [mandatory]
+        "clientId": "WebMail", // use to identify the application by the API
+        "appName": "protonmail", // use to identify the application by the proton react components
         "urlI18n": "", // [mandatory if not protonmail] Url for i18n, ex: settings for protonmail-settings
-        "clientType": "", // CUstom client type
-        "version": "", // CUstom verison 
+        "clientType": "", // Custom client type
+        "version": "", // Custom verison
     }
-
 }
 ```
 ## Commands
