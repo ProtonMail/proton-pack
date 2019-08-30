@@ -40,7 +40,7 @@ module.exports = ({ isProduction }, flow) => {
                             targets: {
                                 browsers: isProduction
                                     ? [
-                                          // To define better
+                                          // TODO: Only browsers that support es6
                                           '> 0.5%, not IE 11'
                                       ]
                                     : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version']
@@ -99,7 +99,7 @@ module.exports = ({ isProduction }, flow) => {
             enforce: 'pre'
         },
         {
-            test: /unsupported\.js$/,
+            test: /(unsupported|browser)\.js$/,
             use: UNSUPPORTED_JS_LOADER
         },
         {
