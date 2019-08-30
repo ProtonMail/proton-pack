@@ -87,7 +87,8 @@ function main({ port, publicPath, flow, appMode }) {
             }
         },
         entry: {
-            index: [...SOURCES_DEV_SERVER, getSource('./src/app/index.js')]
+            index: [...SOURCES_DEV_SERVER, getSource('./src/app/index.js')],
+            unsupported: [getSource('./node_modules/proton-shared/lib/src/app/unsupported.js')]
         },
         output: {
             path: outputPath,
