@@ -41,7 +41,7 @@ module.exports = ({ isProduction }, flow) => {
                                 browsers: isProduction
                                     ? [
                                           // TODO: Only browsers that support es6
-                                          '> 0.5%, not IE 11'
+                                          '> 0.5%, not IE 11, Firefox ESR'
                                       ]
                                     : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version']
                             },
