@@ -99,7 +99,7 @@ module.exports = ({ isProduction }, flow) => {
             enforce: 'pre'
         },
         {
-            test: /(unsupported|browser)\.js$/,
+            test: /unsupported\.js$/,
             use: UNSUPPORTED_JS_LOADER
         },
         {
