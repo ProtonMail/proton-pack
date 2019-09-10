@@ -105,7 +105,7 @@
     "lint": "eslint $(find cli bin -type f) --quiet --cache",
     "pretty": "prettier --write  cli bin",
     "preversion": "git update-index --no-assume-unchanged package-lock.json",
-    "postversion": "git update-index --assume-unchanged package-lock.json && git push --tags"
+    "postversion": "git update-index --assume-unchanged package-lock.json && git push --tags && git push"
   },
   "license": "MIT",
   "lint-staged": {
