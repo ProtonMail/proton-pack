@@ -34,7 +34,6 @@ module.exports = ({ isProduction }, flow) => {
                 cacheCompression: isProduction,
                 compact: isProduction,
                 presets: [
-                    ['@babel/preset-typescript'],
                     [
                         '@babel/preset-env',
                         {
