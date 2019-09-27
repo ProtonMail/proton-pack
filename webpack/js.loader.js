@@ -34,6 +34,7 @@ module.exports = ({ isProduction }, flow) => {
                 cacheCompression: isProduction,
                 compact: isProduction,
                 presets: [
+                    ['@babel/preset-typescript'],
                     [
                         '@babel/preset-env',
                         {
@@ -57,8 +58,7 @@ module.exports = ({ isProduction }, flow) => {
                             // Adds __self attribute to JSX which React will use for some warnings
                             development: !isProduction
                         }
-                    ],
-                    ['@babel/preset-typescript']
+                    ]
                 ],
                 plugins: [
                     '@babel/plugin-syntax-dynamic-import',
