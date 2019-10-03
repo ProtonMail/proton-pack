@@ -2,7 +2,7 @@
   "name": "proton-pack",
   "author": "Proton Technologies AG",
   "description": "Setup boilerplate for webpack",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "bin": {
     "proton-pack": "./bin/protonPack"
   },
