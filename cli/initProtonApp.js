@@ -18,6 +18,8 @@ const PATH_APP_PKG = path.join(process.cwd(), 'package.json');
 async function main(type = 'default') {
     // Make a copy of the whole src repo
     await bash(`cp -r ${TEMPLATE}/${type} src`);
+    // Copy assets
+    await bash(`cp -r ${TEMPLATE}/assets src/assets`);
     // Copy basic i18n setup
     await bash(`cp -r ${TEMPLATE}/po po`);
     // Copy hidden config files
