@@ -5,8 +5,9 @@ interface Props {
     children: React.ReactNode;
 }
 
+// TODO: fix ref
 const PublicLayout = ({ children }: Props) => {
-    const mainAreaRef = useRef();
+    const mainAreaRef = useRef<HTMLElement>();
 
     return (
         <>

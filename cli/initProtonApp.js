@@ -25,6 +25,11 @@ async function main(type = 'default') {
     // Copy hidden config files
     await bash(`cp -r ${TEMPLATE}/.{editorconfig,eslintrc.json,prettierrc} .`);
 
+    if (type === 'auth') {
+        // Copy tsconfig
+        await bash(`cp -r ${TEMPLATE}/tsconfig.json .`);
+    }
+
     // Copy config tmp
     await bash(`cp -r ${TEMPLATE}/circle.yml .`);
     // Copy custom gitignore as during the npm install .gitignore is removed... wtf
