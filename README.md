@@ -24,7 +24,7 @@ A new key exists inside this file now, to add more config
         "appName": "protonmail", // use to identify the application by the proton react components
         "urlI18n": "", // [mandatory if not protonmail] Url for i18n, ex: settings for protonmail-settings
         "clientType": "", // Custom client type
-        "version": "", // Custom verison
+        "version": "", // Custom version
     }
 }
 ```
