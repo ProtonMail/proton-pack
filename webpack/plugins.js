@@ -65,7 +65,6 @@ const PRODUCTION_PLUGINS = [
 module.exports = ({ isProduction, publicPath, appMode }) => {
     const { main, worker, elliptic, compat, definition } = transformOpenpgpFiles(
         OPENPGP_FILES,
-        OPENPGP_WORKERS[0],
         publicPath,
         isProduction
     );

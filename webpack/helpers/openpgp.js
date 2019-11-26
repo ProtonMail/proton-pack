@@ -14,25 +14,25 @@ const transformWorkerContents = (path, contents) =>
 
 const transformCompatPath = ({ basename, ext, hash }) => [basename, 'compat', hash, ext].join('.');
 
-const transform = (openpgpPaths, openpgpWorkerPath, publicPath, isDistRelease) => {
+const transform = (paths, publicPath, isDistRelease) => {
     const main = transformFile({
-        filepath: path.resolve(openpgpPaths[0]),
+        filepath: path.resolve(paths.main),
         hash: isDistRelease
     });
 
     const elliptic = transformFile({
-        filepath: path.resolve(openpgpPaths[1]),
+        filepath: path.resolve(paths.elliptic),
         hash: isDistRelease
     });
 
     const compat = transformFile({
-        filepath: path.resolve(openpgpPaths[2]),
+        filepath: path.resolve(paths.compat),
         hash: isDistRelease,
         transformPath: transformCompatPath
     });
 
     const worker = transformFile({
-        filepath: path.resolve(openpgpWorkerPath),
+        filepath: path.resolve(paths.worker),
         hash: isDistRelease,
         transformContents: transformWorkerContents
     });
