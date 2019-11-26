@@ -20,8 +20,13 @@ const transform = (openpgpPaths, openpgpWorkerPath, publicPath, isDistRelease) =
         hash: isDistRelease
     });
 
-    const compat = transformFile({
+    const elliptic = transformFile({
         filepath: path.resolve(openpgpPaths[1]),
+        hash: isDistRelease
+    });
+
+    const compat = transformFile({
+        filepath: path.resolve(openpgpPaths[2]),
         hash: isDistRelease,
         transformPath: transformCompatPath
     });
@@ -36,6 +41,7 @@ const transform = (openpgpPaths, openpgpWorkerPath, publicPath, isDistRelease) =
         return {
             main: getDefineObject(publicPath, main),
             compat: getDefineObject(publicPath, compat),
+            elliptic: getDefineObject(publicPath, elliptic),
             worker: getDefineObject(publicPath, worker)
         };
     };
@@ -44,6 +50,7 @@ const transform = (openpgpPaths, openpgpWorkerPath, publicPath, isDistRelease) =
         main,
         worker,
         compat,
+        elliptic,
         definition: getDefinition()
     };
 };

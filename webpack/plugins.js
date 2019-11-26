@@ -63,7 +63,7 @@ const PRODUCTION_PLUGINS = [
 ];
 
 module.exports = ({ isProduction, publicPath, appMode }) => {
-    const { main, worker, compat, definition } = transformOpenpgpFiles(
+    const { main, worker, elliptic, compat, definition } = transformOpenpgpFiles(
         OPENPGP_FILES,
         OPENPGP_WORKERS[0],
         publicPath,
@@ -76,7 +76,7 @@ module.exports = ({ isProduction, publicPath, appMode }) => {
             : [new webpack.HotModuleReplacementPlugin(), new webpack.NamedModulesPlugin()]),
 
         new WriteWebpackPlugin(
-            [main, compat, worker].map(({ filepath, contents }) => ({
+            [main, compat, elliptic, worker].map(({ filepath, contents }) => ({
                 name: filepath,
                 data: Buffer.from(contents)
             }))

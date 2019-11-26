@@ -2,9 +2,13 @@ const { getSource } = require('./helpers/source');
 
 const bindNodeModulesPrefix = (name) => getSource(`node_modules/${name}`);
 
-const OPENPGP_FILES = ['openpgp/dist/openpgp.min.js', 'openpgp/dist/compat/openpgp.min.js'].map(bindNodeModulesPrefix);
+const OPENPGP_FILES = [
+    'openpgp/dist/lightweight/openpgp.min.js',
+    'openpgp/dist/lightweight/elliptic.min.js',
+    'openpgp/dist/compat/openpgp.min.js'
+].map(bindNodeModulesPrefix);
 
-const OPENPGP_WORKERS = ['openpgp/dist/openpgp.worker.min.js'].map(bindNodeModulesPrefix);
+const OPENPGP_WORKERS = ['openpgp/dist/lightweight/openpgp.worker.min.js'].map(bindNodeModulesPrefix);
 
 const BABEL_INCLUDE_NODE_MODULES = [
     'asmcrypto.js',
