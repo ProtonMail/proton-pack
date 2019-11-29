@@ -68,18 +68,10 @@ const API_TARGETS = {
 
 const SECURE_URL = ENV_CONFIG.secure;
 
-const identity = (v) => v;
-
 function main({ api = 'dev' }) {
-    const apis = api.split('+');
-    const apiUrl = ['prod', ...apis]
-        .map((key) => API_TARGETS[key])
-        .reverse()
-        .find(identity);
-    const secureUrl = ['prod', ...apis]
-        .map((key) => SECURE_URL[key])
-        .reverse()
-        .find(identity);
+    const apiKeys = api.split('+');
+    const apiUrl = apiKeys.reduce((apiUrl, apiKey) => API_TARGETS[apiKey] || apiUrl, API_TARGETS.prod);
+    const secureUrl = apiKeys.reduce((apiUrl, apiKey) => SECURE_URL[apiKey] || apiUrl, SECURE_URL.prod);
 
     const json = {
         clientId: ENV_CONFIG.app.clientId || 'WebMail',
@@ -88,7 +80,7 @@ function main({ api = 'dev' }) {
         apiUrl
     };
 
-    const firstApi = apis[0]; // api config merging for sentry NOT allowed
+    const firstApi = apiKeys[0]; // api config merging for sentry NOT allowed
     const { SENTRY_RELEASE = '', SENTRY_DSN = '' } = prepareSentry(ENV_CONFIG, json, firstApi);
 
     const config = dedent`
