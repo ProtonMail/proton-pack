@@ -8,11 +8,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const SriPlugin = require('webpack-subresource-integrity');
-const WebappWebpackPlugin = require('webapp-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 const { getSource } = require('./helpers/source');
 const transformOpenpgpFiles = require('./helpers/openpgp');
 const { OPENPGP_FILES, OPENPGP_WORKERS } = require('./constants');
+
 const { logo, ...logoConfig } = require(getSource('src/assets/logoConfig.js'));
 
 const HTML_MINIFY = {
@@ -92,7 +93,7 @@ module.exports = ({ isProduction, publicPath, appMode, featureFlags }) => {
             minify: isProduction && HTML_MINIFY
         }),
 
-        new WebappWebpackPlugin({
+        new FaviconsWebpackPlugin({
             logo: getSource(logo),
             ...logoConfig
         }),
