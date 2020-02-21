@@ -62,7 +62,7 @@ const PRODUCTION_PLUGINS = [
     })
 ];
 
-module.exports = ({ isProduction, publicPath, appMode, featureFlags }) => {
+module.exports = ({ isProduction, publicPath, appMode, featureFlags, favicon = getSource(logo) }) => {
     const { main, worker, elliptic, compat, definition } = transformOpenpgpFiles(
         OPENPGP_FILES,
         publicPath,
@@ -93,7 +93,7 @@ module.exports = ({ isProduction, publicPath, appMode, featureFlags }) => {
         }),
 
         new WebappWebpackPlugin({
-            logo: getSource(logo),
+            logo: favicon,
             ...logoConfig
         }),
 

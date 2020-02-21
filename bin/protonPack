@@ -5,12 +5,16 @@ const chalk = require('chalk');
 const dedent = require('dedent');
 const argv = require('minimist')(process.argv.slice(2));
 const localIp = require('my-local-ip');
+const fsPromises = require('fs').promises;
 
 const configBuilder = require('../cli/config');
 const configAppBuilder = require('../cli/configApp');
 const { json, debug, success } = require('../cli/helpers/log');
 const { script } = require('../cli/helpers/cli');
-const { getPort, getPublicPath, findPort } = require('../webpack/helpers/source');
+const { getPort, getPublicPath, getSource, findPort } = require('../webpack/helpers/source');
+const getDevIcon = require('../cli/helpers/devIcon');
+
+const { logo: logoPath } = require(getSource('src/assets/logoConfig.js'));
 
 const is = (command) => argv._.includes(command);
 
@@ -73,6 +77,10 @@ async function main() {
         const port = await findPort(getPort(argv));
         const publicPath = getPublicPath(argv);
 
+        const devIconData = await getDevIcon(logoPath);
+        const devIconPath = getSource('.tmp.logo.png');
+        await fsPromises.writeFile(devIconPath, devIconData);
+
         const log = (ip = 'localhost') => chalk.yellow(`http://${ip}:${port}${publicPath}`);
         console.log(dedent`
             ➙ Dev server: ${log()}
@@ -80,7 +88,13 @@ async function main() {
             ➙ API: ${chalk.yellow(apiUrl)}
             \n
         `);
-        const CONFIG = configBuilder({ port, publicPath, appMode: APP_MODE, featureFlags: FEATURE_FLAGS });
+        const CONFIG = configBuilder({
+            port,
+            publicPath,
+            appMode: APP_MODE,
+            featureFlags: FEATURE_FLAGS,
+            favicon: devIconPath
+        });
 
         const run = server(CONFIG);
         run.listen(port);
