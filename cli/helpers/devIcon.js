@@ -8,23 +8,16 @@ const DEV_TEXT = Buffer.from(`
 `);
 
 const getDevIcon = (logoPath) => {
-    return (
-        sharp(logoPath, { density: 900 })
-            .resize(200, 200)
-            /*
-        .modulate({
-            brightness: 2
-        })
-        */
-            .composite([
-                {
-                    input: DEV_TEXT,
-                    blend: 'over'
-                }
-            ])
-            .png()
-            .toBuffer()
-    );
+    return sharp(logoPath, { density: 900 })
+        .resize(200, 200)
+        .composite([
+            {
+                input: DEV_TEXT,
+                blend: 'over'
+            }
+        ])
+        .png()
+        .toBuffer();
 };
 
 module.exports = getDevIcon;
