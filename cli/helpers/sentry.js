@@ -1,9 +1,9 @@
 const { sync } = require('./cli');
 
-const getBuildCommit = () => {
+const getBuildCommit = (api) => {
     try {
         const { stdout = '' } = sync('git rev-parse HEAD');
-        return stdout.trim();
+        return `${api}_${stdout.trim()}`;
     } catch (e) {
         return '';
     }
@@ -22,12 +22,11 @@ function getSentryConfig({ sentry = {} }, { version }, api) {
     }
 
     const env = ['dev', 'red'].includes(api) ? 'dev' : api;
-    const { sentry: SENTRY_DSN = '' } = sentry[env] || {};
 
     // For production the release is the version else the hash from the build
-    const SENTRY_RELEASE = env === 'prod' ? version : getBuildCommit();
+    const SENTRY_RELEASE = env === 'prod' ? version : getBuildCommit(api);
 
-    return { SENTRY_DSN, SENTRY_RELEASE };
+    return { SENTRY_DSN: sentry, SENTRY_RELEASE, SENTRY_DSN_ENV: env };
 }
 
 module.exports = getSentryConfig;

@@ -65,13 +65,19 @@ const ENV_CONFIG = Object.keys(CONFIG_ENV.env).reduce(
             return acc;
         }
         const { api, secure, ...sentry } = CONFIG_ENV.env[key];
-        acc.sentry[key] = sentry;
         api && (acc.api[key] = api);
         secure && (acc.secure[key] = secure);
         return acc;
     },
     { sentry: {}, api: {}, secure: {}, pkg: CONFIG_ENV.pkg, app: {} }
 );
+
+ENV_CONFIG.sentry = Object.entries(CONFIG_ENV.env).reduce((acc, [env, { sentry }]) => {
+    if (sentry && env !== 'proxy') {
+        acc[env] = sentry;
+    }
+    return acc;
+}, Object.create(null));
 
 const API_TARGETS = {
     prod: 'https://mail.protonmail.com/api',
@@ -98,10 +104,11 @@ function main({ api = 'dev' }) {
     };
 
     const firstApi = apiKeys[0]; // api config merging for sentry NOT allowed
-    const { SENTRY_RELEASE = '', SENTRY_DSN = '' } = prepareSentry(ENV_CONFIG, json, firstApi);
+    const { SENTRY_RELEASE = '', SENTRY_DSN = '', SENTRY_DSN_ENV = '' } = prepareSentry(ENV_CONFIG, json, firstApi);
 
     json.sentry = {
         release: SENTRY_RELEASE,
+        dsnEnv: SENTRY_DSN_ENV,
         dsn: SENTRY_DSN
     };
 
@@ -119,7 +126,8 @@ function main({ api = 'dev' }) {
     export const CHANGELOG_PATH = 'assets/changelog.tpl.html';
     export const VERSION_PATH = 'assets/version.json';
     export const SENTRY_RELEASE = '${SENTRY_RELEASE}';
-    export const SENTRY_DSN = '${SENTRY_DSN}';
+    export const SENTRY_DSN_ENV = '${SENTRY_DSN_ENV}';
+    export const SENTRY_DSN = ${JSON.stringify(SENTRY_DSN)};
     `;
 
     return {
