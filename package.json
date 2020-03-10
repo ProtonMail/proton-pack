@@ -74,6 +74,7 @@
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.7.0",
     "progress-bar-webpack-plugin": "^2.1.0",
+    "raw-loader": "^4.0.0",
     "react": "^16.12.0",
     "react-components": "github:ProtonMail/react-components.git#master",
     "react-dom": "^16.12.0",
