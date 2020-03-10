@@ -104,10 +104,10 @@ function main({ api = 'dev' }) {
     };
 
     const firstApi = apiKeys[0]; // api config merging for sentry NOT allowed
-    const { SENTRY_RELEASE = '', SENTRY_DSN = '' } = prepareSentry(ENV_CONFIG, firstApi);
+    const { COMMIT_RELEASE = '', SENTRY_DSN = '' } = prepareSentry(ENV_CONFIG, firstApi);
 
     json.sentry = {
-        release: SENTRY_RELEASE,
+        release: COMMIT_RELEASE,
         dsn: SENTRY_DSN
     };
 
@@ -124,7 +124,7 @@ function main({ api = 'dev' }) {
     export const DATE_VERSION = '${new Date().toGMTString()}';
     export const CHANGELOG_PATH = 'assets/changelog.tpl.html';
     export const VERSION_PATH = 'assets/version.json';
-    export const SENTRY_RELEASE = '${SENTRY_RELEASE}';
+    export const COMMIT_RELEASE = '${COMMIT_RELEASE}';
     export const SENTRY_DSN = ${JSON.stringify(SENTRY_DSN)};
     `;
 

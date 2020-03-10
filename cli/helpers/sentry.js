@@ -20,7 +20,7 @@ function getSentryConfig({ sentry = {} }, api) {
     if (api === 'blue' || (process.env.NODE_ENV !== 'production' && api !== 'proxy')) {
         return {};
     }
-    return { SENTRY_DSN: sentry, SENTRY_RELEASE: getBuildCommit() };
+    return { SENTRY_DSN: sentry, COMMIT_RELEASE: getBuildCommit() };
 }
 
 module.exports = getSentryConfig;
