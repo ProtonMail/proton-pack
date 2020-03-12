@@ -125,7 +125,7 @@ function main({ api = 'dev' }) {
     export const CHANGELOG_PATH = 'assets/changelog.tpl.html';
     export const VERSION_PATH = 'assets/version.json';
     export const COMMIT_RELEASE = '${COMMIT_RELEASE}';
-    export const SENTRY_DSN = ${JSON.stringify(SENTRY_DSN)};
+    export const SENTRY_DSN = '${SENTRY_DSN}';
     `;
 
     return {
