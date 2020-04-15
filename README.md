@@ -17,7 +17,7 @@ $ npm i -D github:ProtonMail/proton-pack.git#semver:^1.0.0
 
 As for the WebClient you need to have `appConfig.json` (_previously_ `env.json`)<br>
 A new key exists inside this file now, to add more config
-```json
+```jsonc
 {
     "appConfig": {
         "clientId": "WebMail", // use to identify the application by the API
