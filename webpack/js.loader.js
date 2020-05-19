@@ -1,5 +1,8 @@
+const eslintFormatter = require('react-dev-utils/eslintFormatter');
+
 const { excludeNodeModulesExcept, excludeFiles, createRegex } = require('./helpers/regex');
 const { BABEL_EXCLUDE_FILES, BABEL_INCLUDE_NODE_MODULES } = require('./constants');
+const { appSrcPath } = require('./paths');
 
 const BABEL_PLUGINS_PRODUCTION = [['babel-plugin-transform-react-remove-prop-types', { removeImport: true }]];
 
@@ -25,57 +28,76 @@ const UNSUPPORTED_JS_LOADER = [
     }
 ];
 
-module.exports = ({ isProduction }, flow) => {
-    const TRANSPILE_JS_LOADER = [
+const ESLINT_LOADER = {
+    test: /\.(js|mjs|jsx|ts|tsx)$/,
+    enforce: 'pre',
+    use: [
         {
-            loader: 'babel-loader',
             options: {
-                cacheDirectory: true,
-                cacheCompression: isProduction,
-                compact: isProduction,
-                presets: [
-                    ['@babel/preset-typescript'],
-                    [
-                        '@babel/preset-env',
-                        {
-                            targets: {
-                                browsers: isProduction
-                                    ? [
-                                          // TODO: Only browsers that support es6
-                                          '> 0.5%, not IE 11, Firefox ESR'
-                                      ]
-                                    : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version']
-                            },
-                            useBuiltIns: 'entry',
-                            corejs: 3,
-                            exclude: ['transform-typeof-symbol'] // Exclude transforms that make all code slower
-                        }
-                    ],
-                    [
-                        '@babel/preset-react',
-                        {
-                            // Adds component stack to warning messages
-                            // Adds __self attribute to JSX which React will use for some warnings
-                            development: !isProduction
-                        }
-                    ]
-                ],
-                plugins: [
-                    '@babel/plugin-syntax-dynamic-import',
-                    '@babel/plugin-proposal-object-rest-spread',
-                    '@babel/plugin-proposal-nullish-coalescing-operator',
-                    '@babel/plugin-proposal-optional-chaining',
-                    ['@babel/plugin-proposal-class-properties', { loose: true }],
-                    require('babel-plugin-lodash'),
-                    '@babel/plugin-transform-runtime',
-                    ...(isProduction ? BABEL_PLUGINS_PRODUCTION : ['react-hot-loader/babel'])
-                ]
-            }
+                cache: true,
+                formatter: eslintFormatter,
+                eslintPath: require.resolve('eslint'),
+                resolvePluginsRelativeTo: __dirname,
+                baseConfig: {
+                    extends: [require.resolve('eslint-config-proton-lint')]
+                },
+                useEslintrc: true
+            },
+            loader: require.resolve('eslint-loader')
         }
-    ];
+    ],
+    include: appSrcPath
+};
+
+module.exports = ({ isProduction }, flow) => {
+    const TRANSPILE_JS_LOADER = {
+        loader: 'babel-loader',
+        options: {
+            cacheDirectory: true,
+            cacheCompression: isProduction,
+            compact: isProduction,
+            presets: [
+                ['@babel/preset-typescript'],
+                [
+                    '@babel/preset-env',
+                    {
+                        targets: {
+                            browsers: isProduction
+                                ? [
+                                      // TODO: Only browsers that support es6
+                                      '> 0.5%, not IE 11, Firefox ESR'
+                                  ]
+                                : ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version']
+                        },
+                        useBuiltIns: 'entry',
+                        corejs: 3,
+                        exclude: ['transform-typeof-symbol'] // Exclude transforms that make all code slower
+                    }
+                ],
+                [
+                    '@babel/preset-react',
+                    {
+                        // Adds component stack to warning messages
+                        // Adds __self attribute to JSX which React will use for some warnings
+                        development: !isProduction
+                    }
+                ]
+            ],
+            plugins: [
+                '@babel/plugin-syntax-dynamic-import',
+                '@babel/plugin-proposal-object-rest-spread',
+                '@babel/plugin-proposal-nullish-coalescing-operator',
+                '@babel/plugin-proposal-optional-chaining',
+                ['@babel/plugin-proposal-class-properties', { loose: true }],
+                require('babel-plugin-lodash'),
+                '@babel/plugin-transform-runtime',
+                ...(isProduction ? BABEL_PLUGINS_PRODUCTION : ['react-hot-loader/babel'])
+            ]
+        }
+    };
 
     if (flow === 'i18n') {
-        TRANSPILE_JS_LOADER[0].options.plugins.push([
+        TRANSPILE_JS_LOADER.options.plugins.push([
             'ttag',
             {
                 extract: {
@@ -90,12 +112,13 @@ module.exports = ({ isProduction }, flow) => {
                     excludeNodeModulesExcept(BABEL_INCLUDE_NODE_MODULES),
                     excludeFiles(BABEL_EXCLUDE_FILES)
                 ),
-                use: TRANSPILE_JS_LOADER
+                use: [TRANSPILE_JS_LOADER]
             }
         ];
     }
 
     return [
+        !isProduction && ESLINT_LOADER,
         {
             test: /\.js$|\.tsx?$/,
             use: ['source-map-loader'],
@@ -111,7 +134,7 @@ module.exports = ({ isProduction }, flow) => {
                 excludeNodeModulesExcept(BABEL_INCLUDE_NODE_MODULES),
                 excludeFiles([...BABEL_EXCLUDE_FILES, 'unsupported.js'])
             ),
-            use: TRANSPILE_JS_LOADER
+            use: [TRANSPILE_JS_LOADER]
         }
-    ];
+    ].filter(Boolean);
 };

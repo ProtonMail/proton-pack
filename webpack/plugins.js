@@ -4,16 +4,19 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WriteWebpackPlugin = require('write-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const imageminMozjpeg = require('imagemin-mozjpeg');
+const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const SriPlugin = require('webpack-subresource-integrity');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const tsFormatter = require('react-dev-utils/typescriptFormatter');
 
 const { getSource } = require('./helpers/source');
 const transformOpenpgpFiles = require('./helpers/openpgp');
 const { OPENPGP_FILES, OPENPGP_WORKERS } = require('./constants');
 const { logo, ...logoConfig } = require(getSource('src/assets/logoConfig.js'));
+const { appNodeModulesPath, appTsConfigPath } = require('./paths');
 
 const HTML_MINIFY = {
     removeAttributeQuotes: true,
@@ -59,6 +62,15 @@ const PRODUCTION_PLUGINS = [
                 progressive: true
             })
         ]
+    })
+];
+
+const DEV_PLUGINS = [
+    new ForkTsCheckerWebpackPlugin({
+        checkSyntacticErrors: true,
+        tsconfig: appTsConfigPath,
+        silent: false,
+        formatter: tsFormatter,
     })
 ];
 
@@ -121,6 +133,6 @@ module.exports = ({ isProduction, publicPath, appMode, featureFlags, writeSRI })
             filename: '[file].map'
         }),
 
-        ...(isProduction ? PRODUCTION_PLUGINS : [])
+        ...(isProduction ? PRODUCTION_PLUGINS : DEV_PLUGINS)
     ].filter(Boolean);
 };

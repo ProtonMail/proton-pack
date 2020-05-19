@@ -63,6 +63,7 @@ function main({ port, publicPath, flow, appMode, featureFlags, writeSRI = true }
     }
 
     const CONFIG = {
+        context: __dirname,
         stats: 'minimal',
         mode: !isProduction ? 'development' : 'production',
         bail: isProduction,
