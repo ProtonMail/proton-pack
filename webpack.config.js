@@ -37,6 +37,7 @@ function main({ port, publicPath, flow, appMode, featureFlags, writeSRI = true }
             hot: !isProduction,
             inline: true,
             compress: true,
+            https: true,
             host: '0.0.0.0',
             public: 'localhost',
             historyApiFallback: {

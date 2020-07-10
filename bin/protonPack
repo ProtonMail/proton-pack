@@ -84,7 +84,7 @@ async function main() {
         const port = await findPort(getPort(argv));
         const publicPath = getPublicPath(argv);
 
-        const log = (ip = 'localhost') => chalk.yellow(`http://${ip}:${port}${publicPath}`);
+        const log = (ip = 'localhost') => chalk.yellow(`https://${ip}:${port}${publicPath}`);
         console.log(dedent`
             ➙ Dev server: ${log()}
             ➙ Dev server: ${log(localIp())}
