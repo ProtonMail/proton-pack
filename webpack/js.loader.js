@@ -68,7 +68,7 @@ module.exports = ({ isProduction }, flow) => {
                     ['@babel/plugin-proposal-class-properties', { loose: true }],
                     require('babel-plugin-lodash'),
                     '@babel/plugin-transform-runtime',
-                    ...(isProduction ? BABEL_PLUGINS_PRODUCTION : ['react-refresh/babel'])
+                    ...(isProduction ? BABEL_PLUGINS_PRODUCTION : [require('react-refresh/babel')])
                 ]
             }
         }

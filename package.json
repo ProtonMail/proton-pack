@@ -37,7 +37,6 @@
     "babel-plugin-ttag": "^1.7.26",
     "core-js": "^3.6.4",
     "cross-env": "^7.0.2",
-    "css-hot-loader": "^1.4.4",
     "css-loader": "^3.5.3",
     "dedent": "^0.7.0",
     "del-cli": "^3.0.1",
