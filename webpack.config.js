@@ -68,14 +68,9 @@ function main({ port, publicPath, flow, appMode, featureFlags, writeSRI = true }
         bail: isProduction,
         devtool: false,
         watchOptions: {
-            ignored: [
-                createRegex(excludeNodeModulesExcept(BABEL_INCLUDE_NODE_MODULES), excludeFiles(BABEL_EXCLUDE_FILES)),
-                'i18n/*.json',
-                /\*\.(gif|jpeg|jpg|ico|png)/
-            ]
+            ignored: [/node_modules/, 'i18n/*.json', /\*\.(gif|jpeg|jpg|ico|png)/]
         },
         resolve: {
-            symlinks: false,
             extensions: ['.js', '.tsx', '.ts'],
             alias: {
                 // Ensure that the correct package is used when symlinking
@@ -87,6 +82,7 @@ function main({ port, publicPath, flow, appMode, featureFlags, writeSRI = true }
                 'design-system': path.resolve('./node_modules/design-system'),
                 'proton-shared': path.resolve('./node_modules/proton-shared'),
                 'react-components': path.resolve('./node_modules/react-components'),
+                'react-refresh': path.resolve('./node_modules/react-refresh'),
                 // Else it will use the one from react-component, shared etc. if we use npm link
                 ttag: path.resolve('./node_modules/ttag'),
                 'date-fns': path.resolve('./node_modules/date-fns'),
