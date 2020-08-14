@@ -73,19 +73,20 @@ function main({ port, publicPath, flow, appMode, featureFlags, writeSRI = true }
         resolve: {
             extensions: ['.js', '.tsx', '.ts'],
             alias: {
-                // Ensure that the correct package is used when symlinking
-                pmcrypto: path.resolve('./node_modules/pmcrypto'),
-                react: path.resolve('./node_modules/react'),
-                'react-router': path.resolve('./node_modules/react-router'),
-                'react-router-dom': path.resolve('./node_modules/react-router-dom'),
-                'react-dom': path.resolve('./node_modules/react-dom'),
-                'design-system': path.resolve('./node_modules/design-system'),
-                'proton-shared': path.resolve('./node_modules/proton-shared'),
-                'react-components': path.resolve('./node_modules/react-components'),
-                'react-refresh': path.resolve('./node_modules/react-refresh'),
-                // Else it will use the one from react-component, shared etc. if we use npm link
-                ttag: path.resolve('./node_modules/ttag'),
-                'date-fns': path.resolve('./node_modules/date-fns'),
+                ...[
+                    'react',
+                    'react-dom',
+                    'react-router',
+                    'react-router-dom',
+                    'react-refresh',
+                    'pmcrypto',
+                    'design-system',
+                    'react-components',
+                    'ttag',
+                    'date-fns',
+                    'proton-translations'
+                    // Ensure that the correct package is used when symlinking
+                ].reduce((acc, key) => ({ ...acc, [key]: path.resolve(`./node_modules/${key}`) }), {}),
                 // Custom alias as we're building for the web (mimemessage)
                 iconv: 'iconv-lite'
             }
