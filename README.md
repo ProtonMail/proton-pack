@@ -50,6 +50,7 @@ A new key exists inside this file now, to add more config
 You can also pass custom flags:
 - `--port=<Number>`: to use a custom port
 - `--publicPath=/settings/`: to serve the app on /settings/
+- `--api=<key>|<url>`: key one of the ones from the appConfig (ex: .dev.api -> key= dev) or URL ex: https://mail.protonmail.com/api
 
 - `$ proton-pack compile`
 
