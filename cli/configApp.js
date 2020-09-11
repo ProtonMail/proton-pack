@@ -2,7 +2,7 @@ const path = require('path');
 const dedent = require('dedent');
 const argv = require('minimist')(process.argv.slice(2));
 
-const { sync } = require('./helper/cli');
+const { sync } = require('./helpers/cli');
 const { warn, error } = require('./helpers/log');
 const prepareSentry = require('./helpers/sentry');
 

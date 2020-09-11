@@ -1,14 +1,3 @@
-const { sync } = require('./cli');
-
-const getBuildCommit = () => {
-    try {
-        const { stdout = '' } = sync('git rev-parse HEAD');
-        return stdout.trim();
-    } catch (e) {
-        return '';
-    }
-};
-
 /**
  * Generate the DSN
  * Compat mode if you still use an old env
