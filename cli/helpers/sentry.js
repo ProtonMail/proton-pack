@@ -33,10 +33,10 @@ const getSentryDSN = ({ prod = '' }) => {
  */
 function getSentryConfig({ sentry = {} }, api) {
     if (api === 'blue' || (process.env.NODE_ENV !== 'production' && api !== 'proxy')) {
-        return {};
+        return '';
     }
 
-    return { SENTRY_DSN: getSentryDSN(sentry), COMMIT_RELEASE: getBuildCommit() };
+    return getSentryDSN(sentry);
 }
 
 module.exports = getSentryConfig;
