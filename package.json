@@ -91,7 +91,7 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0",
     "webpack-notifier": "^1.8.0",
-    "webpack-subresource-integrity": "^1.4.0",
+    "webpack-subresource-integrity": "1.4.1",
     "write-webpack-plugin": "^1.1.0",
     "yetch": "^1.1.0"
   },
