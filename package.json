@@ -77,9 +77,13 @@
     "write-webpack-plugin": "^1.1.0"
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.13.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
     "husky": "^4.2.3",
     "lint-staged": "^10.2.12",
-    "prettier": "^2.1.0"
+    "prettier": "^2.1.2"
   },
   "scripts": {
     "lint": "eslint $(find cli bin -type f) --quiet --cache",
