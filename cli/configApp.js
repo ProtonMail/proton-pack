@@ -125,7 +125,7 @@ const getApi = (api) => {
 };
 
 function main({ api = 'dev' }) {
-    const { url: apiUrl, first: firstApi } = getApi(api);
+    const { url: apiUrl } = getApi(api);
     const json = {
         clientId: ENV_CONFIG.app.clientId || 'WebMail',
         appName: ENV_CONFIG.app.appName || ENV_CONFIG.pkg.name || 'protonmail',
