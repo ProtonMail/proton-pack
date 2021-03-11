@@ -67,7 +67,7 @@
     "strip-ansi": "^6.0.0",
     "style-loader": "^2.0.0",
     "svg-inline-loader": "^0.8.2",
-    "terser-webpack-plugin": "^5.1.1",
+    "terser-webpack-plugin": "^4.2.3",
     "ttag": "^1.7.24",
     "ttag-cli": "^1.9.1",
     "url-loader": "^4.1.0",
