@@ -10,14 +10,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const SriPlugin = require('webpack-subresource-integrity');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const { getSource } = require('./helpers/source');
 const transformOpenpgpFiles = require('./helpers/openpgp');
 const { OPENPGP_FILES } = require('./constants');
-
-const { logo, ...logoConfig } = require(getSource('src/assets/logoConfig.js'));
 
 const HTML_MINIFY = {
     removeAttributeQuotes: true,
@@ -106,11 +103,6 @@ module.exports = ({ isProduction, publicPath, appMode, featureFlags, writeSRI })
             template: getSource('src/app.ejs'),
             inject: 'body',
             minify: isProduction && HTML_MINIFY
-        }),
-
-        new FaviconsWebpackPlugin({
-            logo: getSource(logo),
-            ...logoConfig
         }),
 
         ...(writeSRI

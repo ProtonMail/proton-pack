@@ -39,7 +39,6 @@
     "dedent": "^0.7.0",
     "del-cli": "^3.0.1",
     "execa": "^5.0.0",
-    "favicons-webpack-plugin": "^5.0.2",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.5.2",
     "imagemin-mozjpeg": "^9.0.0",
