@@ -33,7 +33,7 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "babel-plugin-ttag": "^1.7.30",
     "copy-webpack-plugin": "^6.4.1",
-    "core-js": "^3.9.1",
+    "core-js": "^3.12.1",
     "cross-env": "^7.0.2",
     "css-loader": "^5.1.2",
     "dedent": "^0.7.0",
